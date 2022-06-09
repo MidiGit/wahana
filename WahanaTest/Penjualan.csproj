@@ -1025,6 +1025,8 @@
     <Content Include="Areas\Admin\Views\Satuan\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Transaksi\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Transaksi\_ListTransaksi.cshtml" />
+    <Content Include="Areas\Admin\Views\Barang\_ListBarang.cshtml" />
+    <Content Include="Areas\Admin\Views\Barang\Index.cshtml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\Common.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
@@ -1048,12 +1050,14 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BarangController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotAccessController.cs" />
     <Compile Include="Areas\Admin\Controllers\SatuanController.cs" />
     <Compile Include="Areas\Admin\Controllers\TransaksiController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\Barang.cs" />
     <Compile Include="Areas\Admin\Models\ComboBoxModel.cs" />
     <Compile Include="Areas\Admin\Models\InventoryModel.cs" />
     <Compile Include="Areas\Admin\Models\Login.cs" />
@@ -1071,7 +1075,9 @@
     <Compile Include="Helper\SqlHelper.cs" />
     <Compile Include="Helper\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BarangService.cs" />
     <Compile Include="Service\GlobalService.cs" />
+    <Compile Include="Service\Interface\IBarang.cs" />
     <Compile Include="Service\Interface\IGlobal.cs" />
     <Compile Include="Service\Interface\IInventory.cs" />
     <Compile Include="Service\Interface\ISatuan.cs" />
