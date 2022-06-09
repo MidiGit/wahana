@@ -79,5 +79,29 @@ namespace Penjualan.Areas.Admin.Controllers
 
             return Json(new DataTablesResponse(requestModel.Draw, data, filteredCount, totalCount), JsonRequestBehavior.AllowGet);
         }
+
+        public async Task<ActionResult> Add(TransaksiModel model)
+        {
+            bool isSave = false;
+            try
+            {
+
+                model.created_by = dHelper.CurrentLoginUser();
+                model.updated_by = dHelper.CurrentLoginUser();
+
+                await transaksi.Add(model);
+
+                isSave = true;
+                return Json(new { success = isSave, message = "Simpan Data Berhasil" }, JsonRequestBehavior.AllowGet);
+                
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = isSave, message = "Simpan Data Gagal " + ex.Message }, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
     }
 }

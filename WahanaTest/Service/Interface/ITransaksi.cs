@@ -10,5 +10,6 @@ namespace Penjualan.Service.Interface
     public interface ITransaksi
     {
         List<TransaksiModel> Get();
+        Task<int> Add(TransaksiModel model);
     }
 }

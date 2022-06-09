@@ -36,5 +36,25 @@ namespace Penjualan.Service
                 throw ex;
             }
         }
+
+        public async Task<int> Add(TransaksiModel model)
+        {
+            try
+            {
+                List<SqlParameter> Params = new List<SqlParameter>
+                {
+                    new SqlParameter() { ParameterName = "no_transaksi", Value = model.no_transaksi.AsString() },
+                    new SqlParameter() { ParameterName = "tanggal", Value = model.tanggal.AsDateTime() },
+                    new SqlParameter() { ParameterName = "total", Value = model.total.AsFloat() },
+                    new SqlParameter() { ParameterName = "updated_by", Value = model.updated_by.AsString() },
+                    new SqlParameter() { ParameterName = "created_by", Value = model.created_by.AsString() }
+                };
+                return await SqlHelper.ExecuteAsync(SqlHelper.strConn, "usp_transaksiInsert", Params, CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

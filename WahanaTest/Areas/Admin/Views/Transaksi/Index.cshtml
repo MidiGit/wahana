@@ -34,31 +34,30 @@
                 <div class="form-horizontal">
                     <input id="_inputState" class="form-control hidden" />
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Username</label>
+                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">No Trans</label>
                         <label class="col-sm-1 col-md-1 control-label">:</label>
                         <div class="col-sm-8 col-md-7">
-                            <input id="username" class="form-control" autofocus />
+                            <input id="no_transaksi" class="form-control" autofocus />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Email</label>
+                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Tanggal</label>
                         <label class="col-sm-1 col-md-1 control-label">:</label>
-                        <div class="col-sm-8 col-md-7">
-                            <input id="email" class="form-control" />
+                        @*<div class="col-sm-8 col-md-7">
+                            <input id="tanggal" class="form-control" />
+                        </div>*@
+                        <div class="input-group date" id="tanggal">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Phone</label>
+                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Total</label>
                         <label class="col-sm-1 col-md-1 control-label">:</label>
                         <div class="col-sm-8 col-md-7">
-                            <input id="phone" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group" id="pass">
-                        <label class="col-sm-3 col-md-4 control-label" style="text-align:left;">Password</label>
-                        <label class="col-sm-1 col-md-1 control-label">:</label>
-                        <div class="col-sm-8 col-md-7">
-                            <input id="password" class="form-control" type="password" />
+                            <input id="total" class="form-control" readonly/>
                         </div>
                     </div>
                 </div>
@@ -72,7 +71,7 @@
 </div>
 
 @section scripts{
-    <script>
+<script>
         $(document).ready(function () {
             DataTable();
             var menuItem = $('#left-sidebar-menu-transaksi');
@@ -80,24 +79,20 @@
             var subMenuItem = menuItem.find('#transaksi-barang');
             subMenuItem.addClass('active');
         })
-        var username;
-        var email;
-        var password;
-        var phone;
+        var no_transaksi;
+        var tanggal;
+        var total;
 
         function ClearVar() {
-            username = "";
-            email = "";
-            password = "";
-            phone = "";
+            no_transaksi = "";
+            tanggal = "";
+            total = "";
         }
         function Init() {
             ClearVar();
-            $("#username").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#phone").val("")
-            //$("#_satuan").val("").trigger('change');
+            $("#no_transaksi").val("");
+            $("#tanggal").val("");
+            $("#total").val("");
         }
 
         var ListVM;
@@ -159,8 +154,6 @@
 
         // initialize the datatables
             ListVM.init();
-
-
         }
 
         toastr.options = {
@@ -171,26 +164,29 @@
             "progressBar": true
         }
 
-        @*function Add() {
+        function Add() {
             Init();
 
             $("#_popUp").modal({ backdrop: 'static' });
             $("#_title").text("New Data");
             $("#_inputState").val("Create");
 
-            $("#username").removeAttr("disabled");
-            $("#email").removeAttr("disabled");
-            $("#pass").removeClass("hidden");
-            $("#password").removeAttr("disabled");
-            $("#phone").removeAttr("disabled");
-
             $("#_saveBtn").removeClass("hidden");
             $("#_saveBtn").html("Simpan");
             $('#_popUp').on('shown.bs.modal', function () {
-                $('#username').focus();
+                $('#no_transaksi').focus();
+                const today = new Date();
+                $('#tanggal').datepicker({
+                    useCurrent: false,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy'
+                });
+                $('#tanggal').datepicker('setDate', today);
+                $('#total').val(0);
             })
         }
-        $(document).on('click', '#btnEdit', function (event) {
+
+        @*$(document).on('click', '#btnEdit', function (event) {
             event.preventDefault();
             var row = $(this).closest('tr');
             var data = $('#tbUser').dataTable().fnGetData(row);
@@ -239,7 +235,7 @@
 
             $("#_saveBtn").removeClass("hidden");
             $("#_saveBtn").html("Hapus");
-        });
+        });*@
 
         function DeletePopUp(data) {
             $("#_popUp").modal({ backdrop: 'static' });
@@ -262,20 +258,19 @@
         function ProsesData() {
             var InputState = $('#_inputState').val();
             ClearVar();
-            username = $("#username").val();
-            email = $("#email").val();
-            password = $('#password').val();
-            phone = $('#phone').val();
-
+            no_transaksi = $("#no_transaksi").val();
+            tanggal = $('#tanggal').datepicker("getDate");
+            total = $('#total').val();
+            console.log(tanggal.toISOString());
             if (InputState == "Create") {
-                if (username == "") {
-                    toastr.warning("Isi Username.")
-                    $("#username").focus();
-                } else if (email == "") {
-                    toastr.warning("Isi email.")
-                    $("#email").focus();
-                } else if (password == "") {
-                    toastr.warning("Isi Password.")
+                if (no_transaksi == "") {
+                    toastr.warning("Isi No transaksi.")
+                    $("#no_transaksi").focus();
+                } else if (tanggal == "") {
+                    toastr.warning("Isi tanggal.")
+                    $("#tanggal").focus();
+                } else if (total == "") {
+                    toastr.warning("Isi total.")
                 } else {
                     Create();
                 }
@@ -289,14 +284,13 @@
 
         function Create() {
             var model = {
-                username: username,
-                email: email,
-                password: password,
-                phone: phone
+                no_transaksi: no_transaksi,
+                tanggal: tanggal.toISOString(),
+                total: total
             }
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("Add", "Users")',
+                url: '@Url.Action("Add", "Transaksi")',
                 data: {
                     model : model
                 },
@@ -305,7 +299,7 @@
                         toastr.success(data.message);
                         $("#_popUp").modal('hide');
                         Init();
-                        $('#tbUser').DataTable().ajax.reload();
+                        $('#tbTrans').DataTable().ajax.reload();
                     } else {
                         toastr.error(data.message);
                         //$("#_popUp").modal('hide');
@@ -315,7 +309,7 @@
             });
         }
 
-        function ValidasiEdit() {
+    @*function ValidasiEdit() {
             if (username == "") {
                 toastr.warning("Isi Username.")
                 $("#username").focus();
@@ -383,5 +377,5 @@
         }*@
 
 
-    </script>
+</script>
 }
