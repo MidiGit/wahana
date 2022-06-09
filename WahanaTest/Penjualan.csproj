@@ -1052,6 +1052,7 @@
     <Compile Include="Areas\Admin\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotAccessController.cs" />
     <Compile Include="Areas\Admin\Controllers\SatuanController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TransaksiController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\ComboBoxModel.cs" />
     <Compile Include="Areas\Admin\Models\InventoryModel.cs" />
